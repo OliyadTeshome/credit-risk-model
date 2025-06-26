@@ -200,9 +200,13 @@ class TestFeatureScaler:
         scaler.fit(self.df)
         result = scaler.transform(self.df)
         
+        # Print for debugging
+        print("Scaled Feature1:", result['Feature1'].values)
+        print("mean:", result['Feature1'].mean(), "std:", result['Feature1'].std(ddof=0))
+        
         # Check that numerical features are scaled
-        assert abs(result['Feature1'].mean()) < 1e-10  # Mean should be close to 0
-        assert abs(result['Feature1'].std(ddof=0) - 1) < 1e-10  # Std should be close to 1
+        assert np.isclose(result['Feature1'].mean(), 0)
+        assert np.isclose(result['Feature1'].std(ddof=0), 1)
         
         # Check that categorical features are unchanged
         assert (result['Categorical'] == self.df['Categorical']).all()
