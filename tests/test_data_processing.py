@@ -1,5 +1,5 @@
 import pandas as pd
-from src.data_processing import compute_rfm
+from data_processing import compute_rfm
 
 def test_compute_rfm_basic():
     data = {
