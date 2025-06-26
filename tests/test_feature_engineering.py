@@ -202,7 +202,7 @@ class TestFeatureScaler:
         
         # Check that numerical features are scaled
         assert abs(result['Feature1'].mean()) < 1e-10  # Mean should be close to 0
-        assert abs(result['Feature1'].std() - 1) < 1e-10  # Std should be close to 1
+        assert abs(result['Feature1'].std(ddof=0) - 1) < 1e-10  # Std should be close to 1
         
         # Check that categorical features are unchanged
         assert (result['Categorical'] == self.df['Categorical']).all()
