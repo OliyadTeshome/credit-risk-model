@@ -4,4 +4,10 @@ scikit-learn
 pandas
 joblib
 pytest
-jupyter 
+jupyter
+matplotlib
+seaborn
+numpy
+xverse
+woe
+category_encoders 
