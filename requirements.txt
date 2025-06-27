@@ -10,4 +10,8 @@ seaborn
 numpy
 xverse
 woe
-category_encoders 
+category_encoders
+# Additional dependencies for RFM analysis and clustering
+plotly
+kaleido
+scipy 
