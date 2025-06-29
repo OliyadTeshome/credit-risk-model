@@ -1,6 +1,6 @@
 # Credit Risk Model
 
-A production-ready machine learning project for credit scoring based on customer transaction data. Exposes a REST API using FastAPI.
+A production-ready machine learning project for credit scoring based on customer transaction data. Exposes a REST API using FastAPI. Includes advanced feature engineering, robust testing, and regulatory-compliant documentation.
 
 ## Project Structure
 
@@ -11,103 +11,62 @@ credit-risk-model/
 │   ├── raw/
 │   └── processed/
 ├── notebooks/
-│   └── 1.0-eda.ipynb          # EDA and initial analysis
+│   ├── 1.0-eda-improved.ipynb # Exploratory Data Analysis (EDA)
+│   └── 4.0-proxy-target-variable-engineering.ipynb # Proxy target engineering
 ├── src/
 │   ├── __init__.py
-│   ├── data_processing.py     # RFM feature engineering per CustomerId
-│   ├── train.py               # Model training script (Random Forest)
+│   ├── data_processing.py     # Data processing and pipeline
+│   ├── feature_engineering.py # Advanced feature engineering (RFM, WOE, etc.)
+│   ├── run_feature_engineering.py # Pipeline runner
+│   ├── train.py               # Model training script (Logistic Regression, Random Forest, etc.)
 │   ├── predict.py             # Model inference using joblib
 │   └── api/
 │       ├── main.py            # FastAPI app with /predict-risk endpoint
 │       └── pydantic_models.py # Request/response schemas
 ├── tests/
-│   └── test_data_processing.py # Unit test for feature engineering
+│   ├── test_data_processing.py    # Unit tests for data processing
+│   └── test_feature_engineering.py # Unit tests for feature engineering
+├── models/                   # Trained model storage
 ├── Dockerfile
 ├── docker-compose.yml
 ├── requirements.txt
 ├── .gitignore
+├── FEATURE_ENGINEERING_README.md  # Detailed feature engineering documentation
 └── README.md
 ```
 
-## Credit Scoring Business Understanding
+## Business Context & Regulatory Requirements
 
-### Basel II Accord and Model Interpretability
+This project is designed to meet the requirements of the Basel II Capital Accord, emphasizing risk quantification, model validation, documentation, and interpretability. In the absence of direct default labels, proxy variables are engineered from behavioral and transactional data, with careful consideration of business risks and regulatory scrutiny.
 
-The Basel II Capital Accord fundamentally transformed banking regulation by introducing risk-based capital requirements. This regulatory framework emphasizes **accurate risk measurement** and **transparent risk assessment processes**. The accord's three pillars—minimum capital requirements, supervisory review, and market discipline—collectively demand that financial institutions demonstrate:
+## Technical Progress
 
-1. **Risk Quantification**: Banks must precisely measure credit risk exposure and maintain adequate capital reserves
-2. **Model Validation**: All risk models must undergo rigorous validation and be approved by regulators
-3. **Documentation Requirements**: Complete documentation of model methodology, assumptions, and limitations is mandatory
-4. **Explainability**: Models must be interpretable to both regulators and senior management
+### Exploratory Data Analysis (EDA)
+- Analyzed 95,662 transactions with 16 features (no missing values, consistent types).
+- Identified strong temporal patterns, customer segments, and outlier behaviors.
 
-This regulatory environment creates a critical need for **interpretable and well-documented models** because:
-- Regulators require clear understanding of how risk is calculated
-- Model decisions must be explainable to customers and stakeholders
-- Audit trails are essential for compliance and risk management
-- Model performance must be continuously monitored and reported
+### Feature Engineering Pipeline
+- **Aggregate Features**: RFM (Recency, Frequency, Monetary), customer-level stats.
+- **Temporal Features**: Hour, day, week, cyclical encoding, business hours, etc.
+- **Categorical Encoding**: WOE, IV, target, label, and one-hot encoding.
+- **Missing Value Handling**: Imputation strategies (mean, KNN, etc.).
+- **Scaling**: Standard, MinMax, and robust scaling.
+- **Feature Selection**: Automated selection of top predictive features.
 
-### Proxy Variables: Necessity and Business Risks
+### Proxy Target Variable Engineering
+- Created multi-dimensional proxies (payment delays, RFM segments, behavioral clusters).
+- Validated proxy-target relationships statistically.
 
-In real-world credit scoring scenarios, direct "default" labels are often unavailable due to:
-- **Data Privacy Regulations**: Customer default information may be restricted
-- **Reporting Delays**: Default events may not be immediately recorded
-- **Definitional Challenges**: Different institutions define default differently
-- **Data Availability**: Historical default data may be limited or incomplete
+### Model Training & Experiment Tracking
+- Baseline models: Logistic Regression, Random Forest, Gradient Boosting.
+- MLflow integrated for experiment tracking and model registry.
+- Performance metrics: AUC, KS, Gini coefficient.
+- Hyperparameter tuning and cross-validation implemented.
 
-**Creating proxy variables becomes necessary** to approximate default risk using available behavioral and transactional data. Common proxies include:
-- Payment delays (30+, 60+, 90+ days past due)
-- Account closures or charge-offs
-- Credit limit reductions
-- Behavioral changes in spending patterns
-
-**Potential Business Risks of Proxy-Based Predictions:**
-
-1. **Model Drift**: Proxies may not accurately represent true default risk over time
-2. **Regulatory Scrutiny**: Regulators may question the validity of proxy definitions
-3. **Performance Degradation**: Model accuracy may decline if proxy-target relationship changes
-4. **Fair Lending Concerns**: Proxy variables might introduce bias or discrimination
-5. **Capital Adequacy**: Incorrect risk estimates could lead to insufficient capital reserves
-
-### Model Complexity Trade-offs in Regulated Financial Context
-
-**Simple, Interpretable Models (e.g., Logistic Regression with WoE)**
-
-**Advantages:**
-- **Regulatory Compliance**: Easier to explain and validate with regulators
-- **Transparency**: Clear feature importance and decision logic
-- **Stability**: More robust to data drift and external changes
-- **Documentation**: Simpler to document and maintain
-- **Audit Trail**: Straightforward to audit and verify decisions
-
-**Disadvantages:**
-- **Performance Limitations**: May not capture complex non-linear relationships
-- **Feature Engineering Dependency**: Requires extensive manual feature engineering
-- **Lower Predictive Power**: May achieve lower AUC/KS statistics
-
-**Complex, High-Performance Models (e.g., Gradient Boosting, Neural Networks)**
-
-**Advantages:**
-- **Superior Performance**: Often achieve higher predictive accuracy
-- **Automatic Feature Learning**: Can discover complex patterns automatically
-- **Better Risk Differentiation**: More granular risk segmentation
-- **Competitive Advantage**: May provide edge in risk-based pricing
-
-**Disadvantages:**
-- **Regulatory Challenges**: Difficult to explain to regulators and stakeholders
-- **Black Box Problem**: Decision logic is not transparent
-- **Validation Complexity**: More difficult to validate and monitor
-- **Overfitting Risk**: May not generalize well to new data
-- **Compliance Burden**: Requires extensive documentation and justification
-
-**Recommended Approach for Regulated Context:**
-
-1. **Start Simple**: Begin with interpretable models (Logistic Regression, Scorecards)
-2. **Incremental Complexity**: Gradually introduce more complex models with proper validation
-3. **Hybrid Approach**: Use complex models for feature engineering, simple models for final decisions
-4. **Comprehensive Documentation**: Maintain detailed documentation regardless of model complexity
-5. **Regular Validation**: Implement robust model monitoring and validation frameworks
-
-The choice between model complexity should be driven by a careful balance of regulatory requirements, business needs, and risk tolerance, with interpretability often taking precedence in highly regulated financial environments.
+### Testing & CI/CD
+- Comprehensive unit tests for all pipeline components.
+- Automated CI/CD with GitHub Actions.
+- Dockerized for reproducible deployment.
 
 ## How to Run
 
@@ -154,6 +113,16 @@ Run unit tests with:
 ```bash
 pytest
 ```
+
+## Documentation
+- **Feature Engineering**: See `FEATURE_ENGINEERING_README.md` for pipeline details.
+- **API Docs**: Auto-generated by FastAPI at `/docs` when running the API.
+
+## Professional Standards
+- Modular, well-documented codebase
+- Regulatory-compliant, interpretable models
+- Comprehensive testing and CI/CD
+- All interim reports and local artifacts are excluded from version control
 
 ## License
 MIT 
