@@ -11,7 +11,7 @@ credit-risk-model/
 │   ├── raw/
 │   └── processed/
 ├── notebooks/
-│   ├── 1.0-eda-improved.ipynb # Exploratory Data Analysis (EDA)
+│   ├── 1.0-eda.ipynb         # Exploratory Data Analysis (EDA)
 │   └── 4.0-proxy-target-variable-engineering.ipynb # Proxy target engineering
 ├── src/
 │   ├── __init__.py
