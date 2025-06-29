@@ -3,4 +3,5 @@ models/
 __pycache__/
 .env
 *.pkl
-*.pyc 
+*.pyc
+Report/ 
