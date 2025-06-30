@@ -272,7 +272,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 For questions or issues:
 1. Check the troubleshooting section
 2. Review the API documentation at `/docs`
-3. Open an issue on GitHub
+3. Open an issue on [GitHub](https://github.com/OliyadTeshome/credit-risk-model.git)
 
 ---
 

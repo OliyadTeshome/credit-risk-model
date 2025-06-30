@@ -433,4 +433,4 @@ server {
 
 ---
 
-**For additional support or questions about deployment, please refer to the main README.md or open an issue on GitHub.** 
+**For additional support or questions about deployment, please refer to the main README.md or open an issue on [GitHub](https://github.com/OliyadTeshome/credit-risk-model.git).** 
