@@ -14,7 +14,7 @@ import os
 # Add src to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from feature_engineering import (
+from src.feature_engineering import (
     TemporalFeatureExtractor,
     AggregateFeatureExtractor,
     CategoricalFeatureEncoder,
@@ -26,7 +26,7 @@ from feature_engineering import (
     create_advanced_feature_engineering_pipeline
 )
 
-from data_processing import (
+from src.data_processing import (
     load_data,
     validate_data,
     identify_feature_types,

@@ -1,5 +1,7 @@
 import pandas as pd
-from data_processing import compute_rfm
+from src.data_processing import compute_rfm, load_data, validate_data
+import tempfile
+import os
 
 def test_compute_rfm_basic():
     data = {
@@ -22,4 +24,22 @@ def test_compute_rfm_basic():
     assert row1['monetary'] == 300
     assert row2['recency_days'] == 1
     assert row2['frequency'] == 3
-    assert row2['monetary'] == 180 
+    assert row2['monetary'] == 180
+
+def test_load_data_success():
+    # Create a temporary CSV file
+    df = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as tmp:
+        df.to_csv(tmp.name, index=False)
+        tmp_path = tmp.name
+    loaded = load_data(tmp_path)
+    assert loaded.equals(df)
+    os.remove(tmp_path)
+
+def test_validate_data_missing_cols():
+    # DataFrame missing required columns
+    df = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
+    report = validate_data(df)
+    assert 'TransactionId' in report['missing_required_cols']
+    assert 'FraudResult' in report['missing_required_cols']
+    assert 'Missing required columns' in ''.join(report['quality_issues']) 

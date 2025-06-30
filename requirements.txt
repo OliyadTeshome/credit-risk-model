@@ -14,4 +14,6 @@ category_encoders
 # Additional dependencies for RFM analysis and clustering
 plotly
 kaleido
-scipy 
+scipy
+mlflow
+flake8 

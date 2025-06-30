@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Project/credit-risk-model/mlruns/741078048579277845/3b4bfcc040494af496891483e02adeec/artifacts
+end_time: 1751292279473
+entry_point_name: ''
+experiment_id: '741078048579277845'
+lifecycle_stage: active
+run_id: 3b4bfcc040494af496891483e02adeec
+run_name: LogisticRegression
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751292263753
+status: 3
+tags: []
+user_id: Admin

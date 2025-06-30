@@ -15,7 +15,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Import our feature engineering module
-from feature_engineering import (
+from .feature_engineering import (
     create_feature_engineering_pipeline,
     create_advanced_feature_engineering_pipeline,
     get_feature_importance_info,
