@@ -22,7 +22,7 @@ A comprehensive machine learning pipeline for credit risk assessment, featuring 
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/OliyadTeshome/credit-risk-model.git
    cd credit-risk-model
    ```
 
